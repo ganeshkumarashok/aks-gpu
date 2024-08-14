@@ -22,6 +22,14 @@
     ]
   }
  },
+  "packageRules": [
+    {
+      "excludePackagePatterns": [".*"],
+      "managers": ["regex"],
+      "matchManagers": ["regex"],
+      "enabled": true
+    }
+  ],
   "logLevelRemap": [
     {
       "matchMessage": "/^Custom manager fetcher/",
