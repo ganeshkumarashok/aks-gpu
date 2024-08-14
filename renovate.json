@@ -24,5 +24,15 @@
       "{ \"releases\": $sort($map($filter($, function($v) { $contains($v.type, 'production') }), function($v) { {\"version\": $v.driver_info[0].release_version, \"sourceUrl\": \"https://docs.nvidia.com/datacenter/tesla/\", \"changelogUrl\": $v.driver_info[0].release_notes} }), function($a, $b) { $number($substring($a.version, 0, 3)) > $number($substring($b.version, 0, 3)) }), \"sourceUrl\": \"https://docs.nvidia.com/datacenter/tesla/\" }"
     ]
   }
- }
+ },
+  "logLevelRemap": [
+    {
+      "matchMessage": "/^Custom manager fetcher/",
+      "newLogLevel": "info"
+    },
+    {
+      "matchMessage": "/custom datasource/",
+      "newLogLevel": "debug"
+    }
+  ]
 }
