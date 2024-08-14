@@ -1,5 +1,5 @@
 cuda:
-  # renovate: datasource=custom.nvidia depName=cuda versioning=semver
+  # renovate: datasource=custom.nvidia-driver depName=nvidia-cuda-driver
   version: "550.90.07"
 
 grid:
