@@ -1,4 +1,5 @@
 cuda:
+  # renovate: datasource=custom.nvidia depName=cuda versioning=semver
   version: "550.90.07"
 
 grid:
