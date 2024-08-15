@@ -18,7 +18,7 @@
   "nvidia-driver": {
     "defaultRegistryUrlTemplate": "https://docs.nvidia.com/datacenter/tesla/drivers/releases.json",
     "transformTemplates": [
-      "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version, \"sourceUrl\": \"https://docs.nvidia.com/datacenter/tesla/\", \"changelogUrl\": $info.release_notes } }) }"
+      "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
     ]
   }
  },
