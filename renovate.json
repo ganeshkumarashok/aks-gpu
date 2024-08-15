@@ -11,7 +11,7 @@
       ],
       "depNameTemplate": "nvidia-cuda-driver",
       "datasourceTemplate": "custom.nvidia-driver",
-      "versioningTemplate": "loose"
+      "versioningTemplate": "semver"
     }
   ],
   "customDatasources": {
