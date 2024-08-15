@@ -7,7 +7,7 @@
         "driver_config.yml"
       ],
       "matchStrings": [
-        "cuda:\\s+version:\\s+\"(?<currentValue>.*)\""
+        "cuda:\\s*(?:#.*)?\\n\\s*version:\\s*\"([^\"]+)\""
       ],
       "depNameTemplate": "nvidia-cuda-driver",
       "datasourceTemplate": "custom.nvidia-driver",
