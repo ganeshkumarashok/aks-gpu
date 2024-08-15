@@ -33,7 +33,7 @@
   "logLevelRemap": [
     {
       "matchMessage": "/^Custom manager fetcher/",
-      "newLogLevel": "info"
+      "newLogLevel": "debug"
     },
     {
       "matchMessage": "/custom datasource/",
