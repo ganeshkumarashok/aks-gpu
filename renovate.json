@@ -7,11 +7,8 @@
         "driver_config.yml"
       ],
       "matchStrings": [
-        "cuda:\\s*(?:#.*)?\\n\\s*version:\\s*\"(?<currentValue>[^\"]+)\""
+        "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*)\\\""
       ],
-      "depNameTemplate": "nvidia-cuda-driver",
-      "datasourceTemplate": "custom.nvidia-driver",
-      "versioningTemplate": "loose"
     }
   ],
   "customDatasources": {
