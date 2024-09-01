@@ -17,8 +17,14 @@
     "transformTemplates": [
       "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
     ]
-  }
- },
+  },
+  "nvidia-grid-driver": {
+  "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/Azure/azhpc-extensions/master/NvidiaGPU/resources.json",
+  "transformTemplates": [
+    "{ \"releases\": $map(OS[Name = 'Linux'].Version[Name = 'Ubuntu'][Version = '22.x'].Driver[Type = 'GRID'].Version, function($ver) { { \"version\": $ver.Num, \"url\": $ver.DirLink } }) }"
+   ]
+ }
+},
   "packageRules": [
     {
       "excludePackagePatterns": [".*"],
