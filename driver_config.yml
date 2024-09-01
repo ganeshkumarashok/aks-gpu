@@ -4,5 +4,5 @@ cuda:
 
 grid:
   # renovate: datasource=custom.nvidia-grid-driver depName=nvidia-grid-driver versioning=loose
-  version: "512.161.08"
+  version: "535.161"
   url: "https://download.microsoft.com/download/8/d/a/8da4fb8e-3a9b-4e6a-bc9a-72ff64d7a13c/NVIDIA-Linux-x86_64-512.161.08-grid-azure.run"
