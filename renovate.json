@@ -10,16 +10,6 @@
       "matchStrings": [
         "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*)\\\"",
         "url:\\s*\"(?<currentUrl>.*)\""
-      ],
-      "replaceStrings": [
-        {
-          "matchString": "version: \"{{{ currentValue }}}\"",
-          "replaceString": "version: \"{{{ newValue }}}\""
-        },
-        {
-          "matchString": "url: \"{{{ currentUrl }}}\"",
-          "replaceString": "url: \"{{{ newUrl }}}\""
-        }
       ]
     }
   ],
