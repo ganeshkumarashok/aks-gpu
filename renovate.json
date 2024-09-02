@@ -8,8 +8,7 @@
         "driver_config.yml"
       ],
       "matchStrings": [
-        "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*)\\\"",
-        "url:\\s*\"(?<currentUrl>.*)\""
+        "#\\s*renovate:\\s*(datasource=(?<datasource>.*?)\\s*)?depName=(?<depName>.*?)(\\s*versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*?)\\\"\\s*(url:\\s*\\\"(?<currentURL>.*?)\\\")?"
       ]
     }
   ],
