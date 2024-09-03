@@ -7,7 +7,7 @@
       "fileMatch": [
         "driver_config.yml"
       ],
-      "matchStrings": [  "#\\s*renovate:\\s*(datasource=(?<datasource>.*?)\\s*)?depName=(?<depName>.*?)(\\s*versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*?)\\\"\\s*(url:\\s*\\\"(?<currentUrl>.*?)\\\")?" ]
+      "matchStrings": [  "#\\s*renovate:\\s*(datasource=(?<datasource>.*?)\\s*)?depName=(?<depName>.*?)(\\s*versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*?)\\\"\\s*(url:\\s*\\\"(?<sourceUrl>.*?)\\\")?" ]
     }
   ],
   "customDatasources": {
@@ -20,7 +20,7 @@
   "nvidia-grid-driver": {
   "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/Azure/azhpc-extensions/master/NvidiaGPU/resources.json",
   "transformTemplates": [
-    "{ \"releases\": $map(OS[Name = 'Linux'].Version[Name = 'Ubuntu'][Version = '22.x'].Driver[Type = 'GRID'].Version, function($ver) { { \"version\": $ver.Num, \"url\": $ver.DirLink } }) }"
+    "{ \"releases\": $map(OS[Name = 'Linux'].Version[Name = 'Ubuntu'][Version = '22.x'].Driver[Type = 'GRID'].Version, function($ver) { { \"version\": $ver.Num, \"sourceUrl\": $ver.DirLink } }) }"
    ]
  }
 },
