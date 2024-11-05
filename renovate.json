@@ -1,6 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "recreateWhen": "always",
   "customManagers": [
     {
       "customType": "regex",
@@ -13,18 +12,6 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "driver_config.yml"
-      ],
-      "matchStrings": [
-        "(?<depName>grid):\\s*\\n\\s*(?:#.*\\n)*\\s*version:\\s*\"(?<currentValue>.*?)\"\\s*\\n\\s*(?:#.*\\n)*\\s*url:\\s*\"(?<currentUrl>.*?)\""
-      ],
-      "datasourceTemplate": "grid-driver",
-      "versioningTemplate": "loose",
-      "depNameTemplate": "{{depName}}"
-    },
-    {
-      "customType": "regex",
       "fileMatch": ["config\\.sh"],
       "matchStrings": [
         "NVIDIA_CONTAINER_TOOLKIT_VER=\"(?<currentValue>.*?)\""
@@ -32,22 +19,32 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "NVIDIA/nvidia-container-toolkit",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["driver_config\\.yml"],
+      "matchStrings": [
+        "grid:\\s*\\n\\s*# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?) versioning=(?<versioning>.*?)\\s*\\n\\s*version:\\s*\"(?<currentValue>[^\"]+)\"\\s*\\n\\s*url:\\s*\"(?<url>[^\"]+)\""
+      ],
+      "datasourceTemplate": "{{{datasource}}}",
+      "depNameTemplate": "{{{depName}}}",
+      "versioningTemplate": "{{{versioning}}}"
     }
   ],
   "customDatasources": {
-  "nvidia-driver": {
-    "defaultRegistryUrlTemplate": "https://docs.nvidia.com/datacenter/tesla/drivers/releases.json",
-    "transformTemplates": [
-      "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
-    ]
-  },
-  "grid-driver": {
+    "nvidia-driver": {
+      "defaultRegistryUrlTemplate": "https://docs.nvidia.com/datacenter/tesla/drivers/releases.json",
+      "transformTemplates": [
+        "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
+      ]
+    },
+    "nvidia-grid": {
       "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json",
       "transformTemplates": [
-        "{ \"releases\": [ (.Latest.Category[] | select(.Name == \"GRID\") | .Versions[] | (. as $version | .Driver[]? | select(any(.SupportedOSVersions[]?; test(\"Ubuntu\"))) | { \"version\": $version.DriverVersion, \"url\": .DirLink })) ] }"
+        "{ \"releases\": $map($filter($reduce($lookup($, \"Latest\").Category, function($acc, $cat) { if ($lookup($cat, \"Name\") == \"GRID\") { $append($acc, $lookup($cat, \"Versions\")) } else { $acc } }, []), function($ver) { $some($lookup($ver, \"Driver\")[0].SupportedOSVersions, function($os) { $contains($os, \"Ubuntu\") }) }), function($ver) { { \"version\": $lookup($ver, \"DriverVersion\"), \"url\": $lookup($ver, \"Driver\")[0].DirLink } }) }"
       ]
-  }
- },
+    }
+  },
   "logLevelRemap": [
     {
       "matchMessage": "/^Custom manager fetcher/",
