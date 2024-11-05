@@ -12,6 +12,19 @@
     },
     {
       "customType": "regex",
+      "fileMatch": [
+        "driver_config.yml"
+      ],
+      "matchStrings": [
+        "(?<depName>grid):\\s*\\n\\s*(?:#.*\\n)*\\s*version:\\s*\"(?<currentValue>.*?)\"\\s*\\n\\s*(?:#.*\\n)*\\s*url:\\s*\"(?<currentUrl>.*?)\""
+      ],
+      "datasourceTemplate": "grid-driver",
+      "versioningTemplate": "loose",
+      "depNameTemplate": "{{depName}}",
+      "depReplaceStringTemplate": "{{depName}}:\n  version: \"{{{newValue}}}\"\n  url: \"{{{url}}}\""
+    },
+    {
+      "customType": "regex",
       "fileMatch": ["config\\.sh"],
       "matchStrings": [
         "NVIDIA_CONTAINER_TOOLKIT_VER=\"(?<currentValue>.*?)\""
@@ -27,7 +40,16 @@
     "transformTemplates": [
       "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
     ]
-  }
+  },
+  "grid-driver": {
+      "defaultRegistryUrls": [
+        "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json"
+      ],
+      "transform": "jq",
+      "transformTemplates": [
+        "{ \"releases\": [ (.Latest.Category[] | select(.Name == \"GRID\") | .Versions[] | (. as $version | .Driver[]? | select(any(.SupportedOSVersions[]?; test(\"Ubuntu\"))) | { \"version\": $version.DriverVersion, \"url\": .DirLink })) ] }"
+      ]
+    },
  },
   "logLevelRemap": [
     {
