@@ -20,7 +20,7 @@
       ],
       "datasourceTemplate": "grid-driver",
       "versioningTemplate": "loose",
-      "depNameTemplate": "{{depName}}",
+      "depNameTemplate": "{{depName}}"
     },
     {
       "customType": "regex",
