@@ -45,7 +45,7 @@
       "transformTemplates": [
         "{ \"releases\": [ (.Latest.Category[] | select(.Name == \"GRID\") | .Versions[] | (. as $version | .Driver[]? | select(any(.SupportedOSVersions[]?; test(\"Ubuntu\"))) | { \"version\": $version.DriverVersion, \"url\": .DirLink })) ] }"
       ]
-    },
+  }
  },
   "logLevelRemap": [
     {
