@@ -21,7 +21,6 @@
       "datasourceTemplate": "grid-driver",
       "versioningTemplate": "loose",
       "depNameTemplate": "{{depName}}",
-      "depReplaceStringTemplate": "{{depName}}:\n  version: \"{{{newValue}}}\"\n  url: \"{{{url}}}\""
     },
     {
       "customType": "regex",
@@ -42,10 +41,7 @@
     ]
   },
   "grid-driver": {
-      "defaultRegistryUrls": [
-        "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json"
-      ],
-      "transform": "jq",
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json",
       "transformTemplates": [
         "{ \"releases\": [ (.Latest.Category[] | select(.Name == \"GRID\") | .Versions[] | (. as $version | .Driver[]? | select(any(.SupportedOSVersions[]?; test(\"Ubuntu\"))) | { \"version\": $version.DriverVersion, \"url\": .DirLink })) ] }"
       ]
