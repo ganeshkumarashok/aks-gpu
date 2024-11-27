@@ -9,7 +9,7 @@
       "matchStrings": [
         "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*)\\\""
       ]
-    },
+    }
   ],
   {
   "customDatasources": {
