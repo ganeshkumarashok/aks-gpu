@@ -11,7 +11,6 @@
       ]
     }
   ],
-  {
   "customDatasources": {
     "nvidia-grid": {
       "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json",
