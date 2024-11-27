@@ -10,25 +10,16 @@
         "#\\s*renovate:\\s*(datasource=(?<datasource>.*?) )?depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s*.*?version.*\\\"(?<currentValue>.*)\\\""
       ]
     },
-    {
-      "customType": "regex",
-      "fileMatch": ["config\\.sh"],
-      "matchStrings": [
-        "NVIDIA_CONTAINER_TOOLKIT_VER=\"(?<currentValue>.*?)\""
-      ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "NVIDIA/nvidia-container-toolkit",
-      "versioningTemplate": "semver"
-    }
   ],
+  {
   "customDatasources": {
-  "nvidia-driver": {
-    "defaultRegistryUrlTemplate": "https://docs.nvidia.com/datacenter/tesla/drivers/releases.json",
-    "transformTemplates": [
-      "{ \"releases\": $map($reduce($map($keys($), function($k) { { \"key\": $k, \"value\": $lookup($, $k) } }), function($acc, $v) { $append($acc, $v.value.driver_info) }, []), function($info) { { \"version\": $info.release_version } }) }"
-    ]
-  }
- },
+    "nvidia-grid": {
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json",
+      "transformTemplates": [
+        "$.[\"Latest\"].Category[select(Name = \"GRID\")].Versions[0].{\"releases\": [{\n  \"version\": DriverVersion,\n  \"url\": Driver[0].DirLink\n}]}"
+      ]
+    }
+  },
   "logLevelRemap": [
     {
       "matchMessage": "/^Custom manager fetcher/",
