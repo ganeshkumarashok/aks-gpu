@@ -20,6 +20,7 @@ def get_latest_grid_driver():
     
     raise Exception("Could not find latest GRID driver version")
 
+# Add this at the end of your update_driver_config function
 def update_driver_config():
     yaml = YAML()
     yaml.preserve_quotes = True
@@ -30,7 +31,9 @@ def update_driver_config():
     
     # Get latest version and URL
     latest_version, latest_url = get_latest_grid_driver()
-    print(latest_version, latest_url)
+    
+    # Store original version for comparison
+    original_version = config['grid']['version']
     
     # Update the grid section while preserving order
     config['grid']['version'] = latest_version
@@ -39,6 +42,11 @@ def update_driver_config():
     # Write back to file
     with open("driver_config.yml", "w") as f:
         yaml.dump(config, f)
+        
+    # Write version to a file if it changed
+    if original_version != latest_version:
+        with open("new_version.txt", "w") as f:
+            f.write(latest_version)
 
 if __name__ == "__main__":
     update_driver_config()

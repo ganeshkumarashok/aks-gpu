@@ -32,18 +32,22 @@ jobs:
         id: git-check
         run: |
           git diff --exit-code driver_config.yml || echo "changes=true" >> $GITHUB_OUTPUT
+          if [ -f new_version.txt ]; then
+            echo "new_version=$(cat new_version.txt)" >> $GITHUB_OUTPUT
+            rm new_version.txt  # Remove the temporary file
+          fi
 
       - name: Create Pull Request
         if: steps.git-check.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'chore: update NVIDIA GRID driver version'
-          title: 'chore: update NVIDIA GRID driver version'
+          commit-message: 'chore: update NVIDIA GRID driver version to ${{ steps.git-check.outputs.new_version }}'
+          title: 'chore: update NVIDIA GRID driver version to ${{ steps.git-check.outputs.new_version }}'
           body: |
-            Automated PR to update NVIDIA GRID driver version.
+            Automated PR to update NVIDIA GRID driver version to ${{ steps.git-check.outputs.new_version }}.
             
             This PR was automatically created by the NVIDIA driver update workflow.
           branch: update-nvidia-drivers
           delete-branch: true
-          base: main  # Change this to your default branch if different
+          base: main
