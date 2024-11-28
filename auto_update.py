@@ -4,7 +4,7 @@ from ruamel.yaml import YAML
 
 def get_latest_grid_driver():
     # URL of the JSON file containing driver information
-    url = "https://raw.githubusercontent.com/ganeshkumarashok/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json"
+    url = "https://raw.githubusercontent.com/Azure/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json"
     response = requests.get(url)
     data = response.json()
     
