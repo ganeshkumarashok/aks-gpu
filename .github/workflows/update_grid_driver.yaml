@@ -1,4 +1,4 @@
-name: Update NVIDIA Drivers
+name: Update NVIDIA GRID Driver
 
 on:
   schedule:
@@ -48,6 +48,6 @@ jobs:
             Automated PR to update NVIDIA GRID driver version to ${{ steps.git-check.outputs.new_version }}.
             
             This PR was automatically created by the NVIDIA driver update workflow.
-          branch: update-nvidia-drivers
+          branch: update-nvidia-drivers-${{ steps.git-check.outputs.new_version }}
           delete-branch: true
           base: main

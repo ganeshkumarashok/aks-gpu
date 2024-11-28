@@ -6,6 +6,7 @@ def get_latest_grid_driver():
     # URL of the JSON file containing driver information
     url = "https://raw.githubusercontent.com/Azure/azhpc-extensions/refs/heads/master/NvidiaGPU/Nvidia-GPU-Linux-Resources.json"
     response = requests.get(url)
+    response.raise_for_status()  
     data = response.json()
     
     # Extract the latest GRID driver information
@@ -25,6 +26,9 @@ def update_driver_config():
     yaml = YAML()
     yaml.preserve_quotes = True
     yaml.indent(mapping=2, sequence=4, offset=2)
+
+    if not os.path.exists("driver_config.yml"):
+        raise FileNotFoundError("driver_config.yml not found in the current directory.")
     
     with open("driver_config.yml", "r") as f:
         config = yaml.load(f)
