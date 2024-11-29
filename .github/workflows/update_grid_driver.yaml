@@ -33,10 +33,6 @@ jobs:
         id: git-check
         run: |
           git diff --exit-code driver_config.yml || echo "changes=true" >> $GITHUB_OUTPUT
-          if [ -f new_version.txt ]; then
-            echo "new_version=$(cat new_version.txt)" >> $GITHUB_OUTPUT
-            rm new_version.txt  # Remove the temporary file
-          fi
 
       - name: Create Pull Request
         if: steps.git-check.outputs.changes == 'true'
